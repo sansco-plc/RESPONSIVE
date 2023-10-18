@@ -1,80 +1,66 @@
-/*========== menu icon navbar ==========*/
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
+// ====================RESPONSIVE NAVBAR====================
+const navList = document.querySelector('.navlist');
+const menuBtn = document.querySelector('.ri-menu-line');
 
-menuIcon.onclick = () =>{
-  menuIcon.classList.toggle('bx-x');
-  navbar.classList.toggle('active');
-};
-/*========== scroll sections active link ==========*/
-let sections = document.querySelectorAll('section');
-let navlinks = document.querySelectorAll('header nav a');
-
-window.onscroll = () => {
-   sections.forEach(sec => {
-    let top = window.scrollY;
-    let offset = sec.offsetTop - 150;
-    let height = sec.offsetHeight;
-    let id = sec.getAttribute('id');
-
-    if(top >= offset && top < offset + height) {
-       navlinks.forEach(links => {
-        links.classList.remove('active');
-        document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-       }); 
-    };
-   });
-
-/*========== sticky navbar ==========*/
-let header = document.querySelector('.header');
-
-header.classList.toggle('sticky', window.scrollY > 100);
+menuBtn.onclick = function(){
+    navList.classList.toggle('active');
+    menuBtn.classList.toggle('ri-arrow-up-double-line');
+}
 
 
 
-/*========== remove menu icon navbar when click navbar link (scroll) ==========*/
-menuIcon.classList.remove('bx-x');
-navbar.classList.remove('active');
-};
+// ====================FIXED NAVBAR====================
 
+window.addEventListener('scroll', ()=>{
+    document.querySelector('nav').classList.toggle("scrolling", scrollY > 50)
+})
 
-/*========== swiper ==========*/
-var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 1,
-    spaceBetween: 50,
-    loop: true,
-    grapCursor: true,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-  });
+// ====================PORTFOLIO=======================
 
+var portfolioTabs = document.getElementsByClassName('portfolio-tab');
+var tabContents = document.getElementsByClassName('tab-content');
 
+function tabOpen(x){
+    for(portfolioTab of portfolioTabs){
+        portfolioTab.classList.remove('active');
+    }
+    for(tabContent of tabContents){
+        tabContent.classlist.remove('active-content');
+    }
+    event.currentTarget.classList.add('active');
+    document.getElementById(x).classList.add('active-content');
+}
 
-  /*========== dark light mode ==========*/
-  let darkModeIcon = document.querySelector('#darkMode-icon');
+// ====================THEME TOGGLER====================
 
-  darkModeIcon.onclick = () => {
-  darkModeIcon.classList.toggle('bx-sun') 
-  document.body.classList.toggle('dark-mode');
-};
+let themeBtn = document.querySelector('#theme-btn');
 
+themeBtn.onclick = function(){
+    themeBtn.classList.toggle('ri-sun-line');
+    if(themeBtn.classList.contains('ri-sun-line')){
+      document.body.classList.add('active');
+    }else{
+        document.body.classList.remove('active')
+    }
+}
 
+// ===================SCROLLREVEAL ANIMATION==================
 
-/*========== scroll reveal ==========*/
-ScrollReveal({ 
- // reset: true,
-  distance: '80px',
-  duration: 2000,
-  delay: 200 
+const sr = scrollReveal({
+    distance: '80px',
+    distance: 2500,
+    delay:200,
+    reset:true,
 });
 
-ScrollReveal().reveal('.home-content, .heading', { origin: 'top' });
-ScrollReveal().reveal('.home-img img, .services-container, .portfolio-box, .testimonial-wrapper, .contact form', { origin: 'bottom' })
-ScrollReveal().reveal('.home-content h1, .about-img img', { origin: 'left' });
-ScrollReveal().reveal('.home-content h3, .home-content p, .about-content', { origin: 'right' });
+sr.reveal('.home-container .left', {origin: 'top'});
+sr.reveal('.home-container .right', {origin: 'left'});
+sr.reveal('.about-container .right', {origin: 'top'});
+sr.reveal('.about-container .left', {origin: 'left'});
+sr.reveal('.services-container', {origin: 'bottom'});
+sr.reveal('.portfolio-container', {origin: 'left'});
+sr.reveal('.portfolio-buttons ', {origin: 'left'});
+sr.reveal('.testimonial-content', {origin: 'top'});
+sr.reveal('.contact-container', {origin: 'buttom'});
+sr.reveal('.contact-content', {origin: 'top'});
+sr.reveal('.copyright', {origin: 'buttom'});
